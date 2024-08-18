@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Stock;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 
 namespace api.Controllers
 {
@@ -55,6 +50,27 @@ namespace api.Controllers
             // await _stockRepo.CreateAsync(stockModel);
 
             return CreatedAtAction(nameof(GetById), new { id = stockModel.Id }, stockModel.ToStockDto());
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateStockRequestDto updateDto){
+
+            var stockModel = _context.Stocks.FirstOrDefault(x => x.Id == id);
+
+            if(stockModel == null){
+                return NotFound();
+            }
+
+            stockModel.CompanyName = updateDto.CompanyName;
+            stockModel.Industry = updateDto.Industry;
+            stockModel.Symbol = updateDto.Symbol;
+            stockModel.Purchase = updateDto.Purchase;
+            stockModel.MarketCap = updateDto.MarketCap;
+            stockModel.LastDiv = updateDto.LastDiv;
+
+            _context.SaveChanges();
+
+            return Ok(stockModel.ToStockDto());
         }
 
         
