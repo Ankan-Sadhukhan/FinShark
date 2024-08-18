@@ -14,11 +14,9 @@ namespace api.Controllers
     {
         // private readonly ILogger<StockController> _logger;
 
-        private readonly ApplicationDBContext _context;
         private readonly IStockRepository _stockRepo;
-        public StockController(ApplicationDBContext context, IStockRepository StockRepo)
+        public StockController(IStockRepository StockRepo)
         {
-            _context = context;
             _stockRepo = StockRepo;
         }
 
