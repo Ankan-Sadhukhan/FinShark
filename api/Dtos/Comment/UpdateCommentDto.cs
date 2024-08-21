@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 
 namespace api.Dtos.Comment
 {
-    public class CommentDto
+    public class UpdateCommentDto
     {
-        public int Id { get; set; }
-
         public string Title { get; set; } = string.Empty;
         public String Content { get; set; } =string.Empty;
-        public DateTime CraetedOn { get; set; } = DateTime.Now;
-        public int? StockId { get; set; }
     }
 }

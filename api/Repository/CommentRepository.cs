@@ -32,5 +32,32 @@ namespace api.Repository
             await _context.SaveChangesAsync();
             return commentModel;
         }
+
+        public async Task<Comment?> UpdateAsync(int id, Comment commentModel){
+            var existingComment = await _context.Comments.FindAsync(id);
+
+            existingComment.Title = commentModel.Title;
+            existingComment.Content = commentModel.Content;
+
+            await _context.SaveChangesAsync();
+
+            return existingComment;
+        }
+
+        public Task<bool> CommentExist(int id){
+            return _context.Comments.AnyAsync(c => c.Id ==id);
+        }
+
+        public async Task<Comment?> DeleteAsync(int id)
+        {
+            var commentModel = await _context.Comments.FirstOrDefaultAsync(c => c.Id ==id);
+
+            if(commentModel == null){
+                return null;
+            }
+            _context.Comments.Remove(commentModel);
+            await _context.SaveChangesAsync();
+            return commentModel;
+        }
     }
 }
